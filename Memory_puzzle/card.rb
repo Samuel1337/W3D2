@@ -21,7 +21,7 @@ class Card
     end
 
     def to_s
-
+        @face_value.to_s
     end
 
     def ==

@@ -3,12 +3,13 @@ require_relative "card"
 
 class Board
 
-    attr_reader :grid
+    CARDS = ("A".."Z").to_a
+    attr_reader :grid, :size
 
    def initialize(num)
     @grid = Array.new(num) { Array.new(num) }
-
- 
+    @size = num * num
+    @cards = []
 
    end
 
@@ -22,9 +23,15 @@ class Board
    end
 
    def populate
+    while @cards.length < @size / 2 do 
+        new_card = CARDS.sample
+        @cards << new_card if !@cards.include?(new_card)
+    end
+    @cards *= 2
 
-   end
     
+   end
+    # make hidden board method
    def render
     topBorder = ["#"] + (0...@grid.length).to_a
     displayGrid = []
