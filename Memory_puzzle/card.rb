@@ -24,7 +24,10 @@ class Card
         @face_value.to_s
     end
 
-    def ==
-
+    def ==(card2)
+        self.face_value == card2.face_value
     end
 end
+
+card1 = Card.new  
+card2 = Card.new   card1 == card2
