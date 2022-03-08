@@ -24,11 +24,18 @@ class Board
    def populate
 
    end
-
-   def render
-
-   end
     
+   def render
+    topBorder = ["#"] + (0...@grid.length).to_a
+    displayGrid = []
+    @grid.each_with_index do |subArr, i|
+       subArr.unshift(i)
+        displayGrid << subArr
+    end
+    displayGrid.unshift(topBorder) 
+    displayGrid.each { |subgrid| puts subgrid.join(" ") } # .ljust(2)
+   end
+
    def won?
     @grid.all? { |subgrid| subgrid.all? { |card| card.face_up }}
    end
@@ -37,14 +44,11 @@ class Board
 
    end
 
-   def print
-    @grid.each { |subgrid| puts subgrid.join(" ") }
-   end
 end
 
 if false 
     #pry testing
     load "board.rb"
     a = Board.new(3)
-    a.print
+    a.render
 end
