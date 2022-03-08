@@ -2,13 +2,11 @@ require_relative "game"
 require_relative "board"
 
 class Card
-    # need card pairs
-    CARDS = ("A".."Z").to_a
 
     attr_reader :face_value, :state
  
-    def initialize
-        @face_value = CARDS.sample
+    def initialize(value)
+        @face_value = value
         @face_up = false
     end
     
@@ -28,6 +26,3 @@ class Card
         self.face_value == card2.face_value
     end
 end
-
-card1 = Card.new  
-card2 = Card.new   card1 == card2

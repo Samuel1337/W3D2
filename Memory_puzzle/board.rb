@@ -1,4 +1,4 @@
-require_relative "game"
+# require_relative "game"
 require_relative "card"
 
 class Board
@@ -31,28 +31,37 @@ class Board
 
         random_cards = @cards.sample(@cards.length)
         random_cards.map! { |ele| Card.new(ele) }
+
         while new_grid.length < @grid.length do
             new_grid << random_cards.shift(@size)
         end
 
         @grid = new_grid
-
     end
+
     # make hidden board method
    def render
     topBorder = ["#"] + (0...@grid.length).to_a
     displayGrid = []
+    
     @grid.each_with_index do |subArr, i|
-       subArr.unshift(i)
+       subArr.unshift(i.to_s)
         displayGrid << subArr
     end
+    
     displayGrid.unshift(topBorder) 
-    displayGrid.each_with_index do |subgrid, idx| 
-        if subgrid.all? { |ele| ele.is_a?(String) }
+    
+    displayGrid.each do |subgrid| 
+        if subgrid.all? { |ele| ele.is_a?(String) || ele.is_a?(Integer) }
             puts subgrid.join(" ")   
-        elsif !subgrid[idx].is_a?(String)
-            subgrid[idx].face_value if subgrid[idx].face_up == true
-
+        else 
+            puts subgrid.map do |ele|
+                if !current.is_a?(String) || !ele.is_a?(Integer)
+                    current.face_up == true ? current.face_value : " "
+                else
+                    ele
+                end.join(" ")
+            end
         end
 
     end
