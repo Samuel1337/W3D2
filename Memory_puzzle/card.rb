@@ -2,7 +2,7 @@ require_relative "game"
 require_relative "board"
 
 class Card
-
+    # need card pairs
     CARDS = ("A".."Z").to_a
 
     attr_reader :face_value, :state

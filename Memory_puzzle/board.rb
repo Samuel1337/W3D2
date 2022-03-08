@@ -6,9 +6,18 @@ class Board
     attr_reader :grid
 
    def initialize(num)
-    @grid = Array.new(num) { Array.new(num, Card.new) }
+    @grid = Array.new(num) { Array.new(num) }
 
  
+
+   end
+
+   def [](pos)
+
+   end
+
+   def []=(pos, value)
+
 
    end
 
@@ -21,10 +30,21 @@ class Board
    end
     
    def won?
+    @grid.all? { |subgrid| subgrid.all? { |card| card.face_up }}
+   end
+
+   def reveal(guessed_pos)
 
    end
 
-   def reveal
-
+   def print
+    @grid.each { |subgrid| puts subgrid.join(" ") }
    end
+end
+
+if false 
+    #pry testing
+    load "board.rb"
+    a = Board.new(3)
+    a.print
 end
