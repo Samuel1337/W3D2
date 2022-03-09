@@ -1,4 +1,4 @@
-# require_relative "game"
+require_relative "game"
 require_relative "card"
 
 class Board
@@ -27,8 +27,8 @@ class Board
             new_card = CARDS.sample
             @cards << new_card if !@cards.include?(new_card)
         end
-        @cards *= 2 # @cards = [ "A", "Z", "P", "S", "O", "K", "A", "Z", "P", "S", "O", "K" ]
-
+        @cards *= 2
+    
         random_cards = @cards.sample(@cards.length)
         random_cards.map! { |ele| Card.new(ele) }
 
@@ -37,15 +37,15 @@ class Board
         end
 
         @grid = new_grid
+        nil
     end
 
-    # make hidden board method
    def render
     topBorder = ["#"] + (0...@grid.length).to_a
     displayGrid = []
-    
-    @grid.each_with_index do |subArr, i|
-       subArr.unshift(i.to_s)
+    new_grid = @grid.dup
+    new_grid.each_with_index do |subArr, i|
+       subArr.unshift(i)
         displayGrid << subArr
     end
     
@@ -55,16 +55,19 @@ class Board
         if subgrid.all? { |ele| ele.is_a?(String) || ele.is_a?(Integer) }
             puts subgrid.join(" ")   
         else 
-            puts subgrid.map do |ele|
-                if !current.is_a?(String) || !ele.is_a?(Integer)
-                    current.face_up == true ? current.face_value : " "
+            new_subgrid = subgrid.map do |ele|
+                if ele.is_a?(Card)
+                    ele.to_s 
                 else
                     ele
-                end.join(" ")
+                end
             end
+            puts new_subgrid.join(" ")
         end
 
     end
+    @grid.map! { |ele| ele[1..-1]}
+    nil
    end
 
    def won?
@@ -72,7 +75,8 @@ class Board
    end
 
    def reveal(guessed_pos)
-    @grid[pos].face_up = true 
+    self[guessed_pos].face_up = true 
+    render
    end
 
 end
@@ -80,7 +84,7 @@ end
 if false 
     #pry testing
     load "board.rb"
-    a = Board.new(3)
+    a = Board.new(4)
     a.render
     a.populate
 end
